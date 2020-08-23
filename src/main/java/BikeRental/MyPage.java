@@ -11,10 +11,8 @@ public class MyPage {
         @GeneratedValue(strategy=GenerationType.AUTO)
         private Long userId;
         private Long voucherId;
-        private Long rentalId;
         private Long bikeId;
         private String userName;
-        private String bikeName;
         private Long voucherCnt;
 
 
@@ -32,13 +30,6 @@ public class MyPage {
         public void setVoucherId(Long voucherId) {
             this.voucherId = voucherId;
         }
-        public Long getRentalId() {
-            return rentalId;
-        }
-
-        public void setRentalId(Long rentalId) {
-            this.rentalId = rentalId;
-        }
         public Long getBikeId() {
             return bikeId;
         }
@@ -52,13 +43,6 @@ public class MyPage {
 
         public void setUserName(String userName) {
             this.userName = userName;
-        }
-        public String getBikeName() {
-            return bikeName;
-        }
-
-        public void setBikeName(String bikeName) {
-            this.bikeName = bikeName;
         }
         public Long getVoucherCnt() {
             return voucherCnt;

@@ -40,7 +40,7 @@ public class MyPageViewHandler {
         try {
             if (userUpdated.isMe()) {
                 // view 객체 조회
-                Optional<MyPage> myPageOptional = myPageRepository.findByUserId(userUpdated.getId());
+                Optional<MyPage> myPageOptional = myPageRepository.findById(userUpdated.getId());
                 if( myPageOptional.isPresent()) {
                     MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
@@ -58,7 +58,7 @@ public class MyPageViewHandler {
         try {
             if (voucherBought.isMe()) {
                 // view 객체 조회
-                Optional<MyPage> myPageOptional = myPageRepository.findByUserId(voucherBought.getUserId());
+                Optional<MyPage> myPageOptional = myPageRepository.findById(voucherBought.getUserId());
                 if( myPageOptional.isPresent()) {
                     MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
@@ -77,8 +77,9 @@ public class MyPageViewHandler {
         try {
             if (voucherMinus.isMe()) {
                 // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByVoucherId(voucherMinus.getId());
-                for(MyPage myPage : myPageList){
+                Optional<MyPage> myPageOptional = myPageRepository.findById(voucherMinus.getUserId());
+                if( myPageOptional.isPresent()) {
+                    MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     myPage.setVoucherCnt(voucherMinus.getVoucherCnt());
                     // view 레파지 토리에 save
@@ -94,8 +95,9 @@ public class MyPageViewHandler {
         try {
             if (voucherPlus.isMe()) {
                 // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByVoucherId(voucherPlus.getId());
-                for(MyPage myPage : myPageList){
+                Optional<MyPage> myPageOptional = myPageRepository.findById(voucherPlus.getUserId());
+                if( myPageOptional.isPresent()) {
+                    MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     myPage.setVoucherCnt(voucherPlus.getVoucherCnt());
                     // view 레파지 토리에 save
@@ -111,11 +113,11 @@ public class MyPageViewHandler {
         try {
             if (rented.isMe()) {
                 // view 객체 조회
-                Optional<MyPage> myPageOptional = myPageRepository.findByUserId(rented.getUserId());
+                Optional<MyPage> myPageOptional = myPageRepository.findById(rented.getUserId());
                 if( myPageOptional.isPresent()) {
                     MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setRentalId(rented.getId());
+//                    myPage.setRentalId(rented.getId());
                     myPage.setBikeId(rented.getBikeId());
                     // view 레파지 토리에 save
                     myPageRepository.save(myPage);
@@ -126,50 +128,16 @@ public class MyPageViewHandler {
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenBikeRented_then_UPDATE_6(@Payload BikeRented bikeRented) {
-        try {
-            if (bikeRented.isMe()) {
-                // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByBikeId(bikeRented.getId());
-                for(MyPage myPage : myPageList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setBikeName(bikeRented.getBikeName());
-                    // view 레파지 토리에 save
-                    myPageRepository.save(myPage);
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenRentalCancelled_then_UPDATE_7(@Payload RentalCancelled rentalCancelled) {
+    public void whenRentalCancelled_then_UPDATE_6(@Payload RentalCancelled rentalCancelled) {
         try {
             if (rentalCancelled.isMe()) {
                 // view 객체 조회
-                Optional<MyPage> myPageOptional = myPageRepository.findByUserId(rentalCancelled.getUserId());
+                Optional<MyPage> myPageOptional = myPageRepository.findById(rentalCancelled.getUserId());
                 if( myPageOptional.isPresent()) {
                     MyPage myPage = myPageOptional.get();
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setRentalId(rentalCancelled.getId());
+//                    myPage.setRentalId(rentalCancelled.getId());
                     myPage.setBikeId(rentalCancelled.getBikeId());
-                    // view 레파지 토리에 save
-                    myPageRepository.save(myPage);
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenBikeRentalCancelled_then_UPDATE_8(@Payload BikeRentalCancelled bikeRentalCancelled) {
-        try {
-            if (bikeRentalCancelled.isMe()) {
-                // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByBikeId(bikeRentalCancelled.getId());
-                for(MyPage myPage : myPageList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setBikeName(bikeRentalCancelled.getBikeName());
                     // view 레파지 토리에 save
                     myPageRepository.save(myPage);
                 }
